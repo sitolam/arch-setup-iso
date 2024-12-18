@@ -1,0 +1,32 @@
+name: Build and Release ISO
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # Runs at midnight on the first day of every month
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Arch Linux environment
+        run: |
+          sudo pacman -Sy --noconfirm archiso
+
+      - name: Build ISO
+        run: |
+          sudo mkarchiso -v
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "${{ github.event.schedule }}-release"  # Uses the schedule event date as the tag
+          files: out/*.iso
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
