@@ -26,7 +26,7 @@ jobs:
           mkarchiso -v .
 
       - name: Generate Name
-        id: apk_name
+        id: name
         run: |
           version="$(date +"%Y.%m.%d")-release"
           echo "version=$version" >> $GITHUB_ENV
@@ -42,4 +42,6 @@ jobs:
             ./out/*.iso
         env:
           version: ${{ env.version }}
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+        contents: write
