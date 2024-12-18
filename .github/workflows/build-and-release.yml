@@ -19,7 +19,7 @@ jobs:
 
       - name: Set up Arch Linux environment
         run: |
-          pacman -Sy --noconfirm archiso
+          pacman -Sy --noconfirm archiso git
 
       - name: Build ISO
         run: |
