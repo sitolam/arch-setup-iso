@@ -28,7 +28,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "${{ format('{0:yyyy-MM-dd}', github.event.head_commit.timestamp || github.event.schedule) }}"
+          tag_name: "$(date +'%Y.%m.%d')-release"
 
           files: ./out/*.iso
         env:
