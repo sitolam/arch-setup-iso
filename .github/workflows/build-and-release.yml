@@ -23,7 +23,7 @@ jobs:
 
       - name: Build ISO
         run: |
-          sudo mkarchiso -v
+          mkarchiso -v
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
