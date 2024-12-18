@@ -25,13 +25,21 @@ jobs:
         run: |
           mkarchiso -v .
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: "$(date +'%Y.%m.%d')-release"
+      - name: Generate Name
+        id: apk_name
+        run: |
+          version="$(date +"%Y.%m.%d")-release"
+          echo "version=$version" >> $GITHUB_ENV
 
-          files: ./out/*.iso
+      - name: Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.version }}
+          name: Release ${{ env.version }}
+          append_body: false
+          files: |
+            ./out/*.iso
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    permissions:
-        contents: write
+          version: ${{ env.version }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
