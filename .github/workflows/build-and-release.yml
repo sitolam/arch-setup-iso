@@ -9,8 +9,10 @@ on:
 
 jobs:
   build:
-    runs-on: archlinux-latest
-
+    runs-on: ubuntu-latest
+    container:
+        image: archlinux
+        options: --privileged
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
